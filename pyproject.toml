@@ -9,6 +9,19 @@ description = "Reference integration for Ally (a11y-assist, a11y-lint, a11y-ci)"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
+authors = [
+    {name = "mcp-tool-shop", email = "64996768+mcp-tool-shop@users.noreply.github.com"}
+]
+keywords = [
+    "a11y",
+    "accessibility",
+    "cli",
+    "demo",
+    "reference",
+    "ally",
+    "error-messages",
+    "assistive-technology",
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
@@ -37,6 +50,7 @@ demo-cli = "demo_cli.cli:main"
 [project.urls]
 Homepage = "https://github.com/mcp-tool-shop/ally-demo-python"
 Repository = "https://github.com/mcp-tool-shop/ally-demo-python"
+Issues = "https://github.com/mcp-tool-shop/ally-demo-python/issues"
 
 [tool.setuptools.packages.find]
 include = ["demo_cli*"]

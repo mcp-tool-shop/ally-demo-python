@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+        pip install -e .[dev]
+
+    - name: Run tests
+      run: pytest tests/ -v
+
+    - name: Test CLI commands
+      run: |
+        # Test each error scenario
+        demo-cli network-timeout --json-out /tmp/cli_error_timeout.json || true
+        demo-cli config-missing --json-out /tmp/cli_error_config.json || true
+        demo-cli auth-failed --json-out /tmp/cli_error_auth.json || true
+        demo-cli permission-denied --json-out /tmp/cli_error_permission.json || true
+        demo-cli validation-error --json-out /tmp/cli_error_validation.json || true
+
+    - name: Validate error messages with a11y-lint
+      run: |
+        a11y-lint validate /tmp/cli_error_timeout.json
+        a11y-lint validate /tmp/cli_error_config.json
+        a11y-lint validate /tmp/cli_error_auth.json
+        a11y-lint validate /tmp/cli_error_permission.json
+        a11y-lint validate /tmp/cli_error_validation.json
