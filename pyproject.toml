@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ally-demo-python"
-version = "0.1.0"
+version = "0.2.0"
 description = "Reference integration for Ally (a11y-assist, a11y-lint, a11y-ci)"
 readme = "README.md"
 license = {text = "MIT"}
